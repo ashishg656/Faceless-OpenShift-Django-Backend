@@ -1,5 +1,5 @@
 """
-WSGI config for myproject project.
+WSGI config for instirepo project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-# GETTING-STARTED: change 'myproject' to your project name:
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+# GETTING-STARTED: change 'instirepo' to your project name:
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "instirepo.settings")
 
 application = get_wsgi_application()

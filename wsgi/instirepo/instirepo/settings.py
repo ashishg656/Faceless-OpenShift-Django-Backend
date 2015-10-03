@@ -1,5 +1,5 @@
 """
-Django settings for myproject project.
+Django settings for instirepo project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.8/topics/settings/
@@ -60,8 +60,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-# GETTING-STARTED: change 'myproject' to your project name:
-ROOT_URLCONF = 'myproject.urls'
+# GETTING-STARTED: change 'instirepo' to your project name:
+ROOT_URLCONF = 'instirepo.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myproject.wsgi.application'
+WSGI_APPLICATION = 'instirepo.wsgi.application'
 
 
 # Database
