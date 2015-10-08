@@ -1,4 +1,3 @@
-from ctypes import c_short
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpRequest, Http404, JsonResponse
@@ -195,9 +194,18 @@ def get_chats_for_channel(request):
 def add_chat_message(request):
     message = request.POST.get('message')
     channel_id = request.POST.get('channel_id')
+    user_profile_id = request.POST.get('user_profile_id')
+
+    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
+    team = user_profile.team_id
 
     channel = Channels.objects.get(pk=int(channel_id))
     chat = Chats(message=message, channel_id=channel)
     chat.save()
+
+    query = UserProfiles.objects.get(team_id=team)
+    for user in query:
+        device_send = GCMDevice.objects.get(user=user.user_link_obj)
+        device_send.send_message("You've got mail")
 
     return JsonResponse({'message': chat.message})
