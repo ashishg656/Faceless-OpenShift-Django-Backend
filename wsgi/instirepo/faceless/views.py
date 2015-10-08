@@ -189,3 +189,15 @@ def get_chats_for_channel(request):
         next_page = query.next_page_number()
 
     return JsonResponse({'chats': chats, 'next_page': next_page})
+
+
+@csrf_exempt
+def add_chat_message(request):
+    message = request.POST.get('message')
+    channel_id = request.POST.get('channel_id')
+
+    channel = Channels.objects.get(pk=int(channel_id))
+    chat = Chats(message=message, channel_id=channel)
+    chat.save()
+
+    return JsonResponse({'message': chat.message})
