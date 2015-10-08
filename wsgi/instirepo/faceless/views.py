@@ -69,6 +69,7 @@ def login_request(request):
     error = True
     password_change_required = False
     user_profile_id = None
+    is_admin = False
 
     username = username_req + "@" + team_name_req
     user = authenticate(username=username, password=password_req)
@@ -79,9 +80,11 @@ def login_request(request):
             user_profile.is_first_time_login = False
             user_profile.save()
         user_profile_id = user_profile.id
+        is_admin = user_profile.is_admin
         error = False
 
-    return JsonResponse({'error': error, 'password_change_required': password_change_required, 'id': user_profile_id})
+    return JsonResponse({'error': error, 'password_change_required': password_change_required, 'id': user_profile_id,
+                         'is_admin': is_admin})
 
 
 @csrf_exempt
@@ -150,3 +153,17 @@ def make_channel(request):
             error = False
 
     return JsonResponse({'error': error})
+
+
+@csrf_exempt
+def all_channels(request):
+    user_profle_id = request.POST.get('user_profile_id')
+
+    user_profile = UserProfiles.objects.get(pk=int(user_profle_id))
+    channels_list = Channels.objects.filter(company_id=user_profile.team_id)
+
+    channels = []
+    for channel in channels_list:
+        channels.append({'name': channel.name, 'id': channel.id})
+
+    return JsonResponse({'channels': channels})
