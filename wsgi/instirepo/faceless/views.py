@@ -184,4 +184,8 @@ def get_chats_for_channel(request):
     for chat in query:
         chats.append({'text': chat.message, 'time': chat.time})
 
-    return JsonResponse({'chats': chats})
+    next_page = None
+    if query.has_next():
+        next_page = query.next_page_number()
+
+    return JsonResponse({'chats': chats, 'next_page': next_page})
