@@ -205,6 +205,6 @@ def add_chat_message(request):
     query = UserProfiles.objects.filter(team_id=team)
     for user in query:
         device_send = GCMDevice.objects.get(user=user.user_link_obj)
-        device_send.send_message("You've got mail")
+        device_send.send_message(message)
 
     return JsonResponse({'message': chat.message})
