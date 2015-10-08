@@ -67,3 +67,9 @@ class PollsAnswers(models.Model):
     user_id = models.ForeignKey(UserProfiles)
     choice = models.ForeignKey(PollsChoices)
     poll_id = models.ForeignKey(Polls)
+
+
+class Chats(models.Model):
+    message = models.TextField(null=True)
+    time = models.DateTimeField(auto_now=True, null=True)
+    channel_id = models.ForeignKey(Channels, null=True)

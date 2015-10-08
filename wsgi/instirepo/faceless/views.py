@@ -167,3 +167,21 @@ def all_channels(request):
         channels.append({'name': channel.name, 'id': channel.id})
 
     return JsonResponse({'channels': channels})
+
+
+@csrf_exempt
+def get_chats_for_channel(request):
+    channel_id = request.POST.get('channel_id')
+    pagenumber = request.POST.get('pagenumber', 1)
+
+    channel = Channels.objects.get(pk=int(channel_id))
+    query = Chats.objects.filter(channel_id=channel).order_by('-time')
+
+    query_paginated = Paginator(query, 20)
+    query = query_paginated.page(pagenumber)
+
+    chats = []
+    for chat in query:
+        chats.append({'text': chat.message, 'time': chat.time})
+
+    return JsonResponse({'chats': chats})
