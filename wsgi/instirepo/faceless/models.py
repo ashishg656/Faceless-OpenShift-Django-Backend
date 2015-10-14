@@ -29,12 +29,16 @@ class Posts(models.Model):
     heading = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to='posts_images', max_length=255, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now=True, null=True)
+    team_id = models.ForeignKey(Teams, null=True)
 
 
 class Polls(models.Model):
     heading = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to='polls_images', max_length=255, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now=True, null=True)
+    team_id = models.ForeignKey(Teams, null=True)
 
 
 class PollsChoices(models.Model):

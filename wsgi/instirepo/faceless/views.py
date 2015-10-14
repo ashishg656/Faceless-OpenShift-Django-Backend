@@ -13,6 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 from faceless.models import *
 from django.core import serializers
 from push_notifications.models import GCMDevice
+from itertools import chain
+from operator import attrgetter
 
 
 @csrf_exempt
@@ -171,7 +173,7 @@ def all_channels(request):
 @csrf_exempt
 def get_chats_for_channel(request):
     channel_id = request.POST.get('channel_id')
-    pagenumber = request.POST.get('pagenumber', 1)
+    pagenumber = request.GET.get('pagenumber', 1)
 
     channel = Channels.objects.get(pk=int(channel_id))
     query = Chats.objects.filter(channel_id=channel).order_by('-time')
@@ -208,3 +210,12 @@ def add_chat_message(request):
         device_send.send_message(message)
 
     return JsonResponse({'message': chat.message})
+
+
+@csrf_exempt
+def get_feeds(request):
+    a = Polls.objects.all()
+    b = Posts.objects.all()
+
+    res = sorted(chain(a, b), key=attrgetter('date_created'))
+    return HttpResponse(res)
