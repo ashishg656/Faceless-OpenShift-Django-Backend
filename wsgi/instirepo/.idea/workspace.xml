@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7a4381c-09c7-42fe-a9d3-e52bd97337d9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless/models.py" afterPath="$PROJECT_DIR$/faceless/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless/urls.py" afterPath="$PROJECT_DIR$/faceless/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless/views.py" afterPath="$PROJECT_DIR$/faceless/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="instirepo.iws" />
     <ignored path=".idea/workspace.xml" />

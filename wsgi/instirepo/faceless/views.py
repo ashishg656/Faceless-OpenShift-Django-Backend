@@ -172,7 +172,7 @@ def all_channels(request):
 
 @csrf_exempt
 def get_chats_for_channel(request):
-    channel_id = request.POST.get('channel_id')
+    channel_id = request.GET.get('channel_id')
     pagenumber = request.GET.get('pagenumber', 1)
 
     channel = Channels.objects.get(pk=int(channel_id))
