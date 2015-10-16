@@ -77,4 +77,4 @@ class Chats(models.Model):
     message = models.TextField(null=True)
     time = models.DateTimeField(auto_now=True, null=True)
     channel_id = models.ForeignKey(Channels, null=True)
-    user_profile_id = models.ForeignKey(UserProfiles, null=True)
+    user_profile_id = models.ForeignKey(UserProfiles, null=True, blank=True)

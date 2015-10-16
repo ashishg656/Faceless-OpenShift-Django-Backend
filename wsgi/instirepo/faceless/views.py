@@ -168,7 +168,17 @@ def all_channels(request):
         try:
             test = ChannelUnsubscriptions.objects.get(channel_id=channel, user_id=user_profile, is_active=True)
         except:
-            channels.append({'name': channel.name, 'id': channel.id, 'is_unsubscribed': False})
+            last_chat_msg = None
+            last_chat_time = None
+            try:
+                last_chat_obj = Chats.objects.filter(channel_id=channel).order_by('-time')[1]
+                last_chat_msg = last_chat_obj.message
+                last_chat_time = last_chat_obj.time
+            except:
+                pass
+            channels.append(
+                {'name': channel.name, 'id': channel.id, 'is_unsubscribed': False, 'last_chat_msg': last_chat_msg,
+                 'last_chat_time': last_chat_time})
 
     for channel in channels_list:
         try:
