@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7a4381c-09c7-42fe-a9d3-e52bd97337d9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/faceless/views.py" afterPath="$PROJECT_DIR$/faceless/views.py" />
-    </list>
+    <list default="true" id="b7a4381c-09c7-42fe-a9d3-e52bd97337d9" name="Default" comment="" />
     <ignored path="instirepo.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/faceless/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="16" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="16" />
+              <caret line="39" column="39" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="39" />
               <folding>
                 <element signature="e#1422#1488#0" expanded="false" />
                 <element signature="e#1524#1743#0" expanded="false" />
@@ -51,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/faceless/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52307695">
-              <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="185" column="49" selection-start-line="185" selection-start-column="45" selection-end-line="185" selection-end-column="49" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
                 <element signature="e#1676#1900#0" expanded="false" />
@@ -65,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/instirepo/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.7962329">
+              <caret line="81" column="6" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -363,7 +361,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21056548" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -897,14 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/instirepo/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/instirepo_web/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08717949">
@@ -922,10 +912,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/faceless/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="49" selection-start-line="185" selection-start-column="45" selection-end-line="185" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#1676#1900#0" expanded="false" />
+            <element signature="e#1948#2821#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/faceless/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="16" />
+          <caret line="39" column="39" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="39" />
           <folding>
             <element signature="e#1422#1488#0" expanded="false" />
             <element signature="e#1524#1743#0" expanded="false" />
@@ -936,15 +938,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/faceless/views.py">
+    <entry file="file://$PROJECT_DIR$/instirepo/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52307695">
-          <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-            <element signature="e#1676#1900#0" expanded="false" />
-            <element signature="e#1948#2821#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.7962329">
+          <caret line="81" column="6" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
