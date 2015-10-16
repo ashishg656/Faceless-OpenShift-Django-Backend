@@ -284,8 +284,15 @@ def get_feeds(request):
                                                  user_id=user_profile).count()
             has_downvoted = Upvotes.objects.filter(post_id=post, is_active=True, is_upvote=False,
                                                    user_id=user_profile).count()
+
+            image_url = None
+            try:
+            	image_url = post.image.url
+            except:
+            	pass
+
             posts_array.append(
-                {'is_poll': False, 'heading': post.heading, 'description': post.description, 'image': post.image.url,
+                {'is_poll': False, 'heading': post.heading, 'description': post.description, 'image': image_url,
                  'date': post.date_created, 'id': post.id, 'comment_count': comment_count,
                  'upvotes_count': upvotes_count, 'has_downvoted': has_downvoted, 'has_upvoted': has_upvoted})
 
