@@ -165,7 +165,17 @@ def all_channels(request):
 
     channels = []
     for channel in channels_list:
-        channels.append({'name': channel.name, 'id': channel.id})
+        try:
+            test = ChannelUnsubscriptions.objects.get(channel_id=channel, user_id=user_profile, is_active=True)
+        except:
+            channels.append({'name': channel.name, 'id': channel.id, 'is_unsubscribed': False})
+
+    for channel in channels_list:
+        try:
+            test = ChannelUnsubscriptions.objects.get(channel_id=channel, user_id=user_profile, is_active=True)
+            channels.append({'name': channel.name, 'id': channel.id, 'is_unsubscribed': True})
+        except:
+            pass
 
     return JsonResponse({'channels': channels})
 
@@ -198,24 +208,70 @@ def add_chat_message(request):
     channel_id = request.POST.get('channel_id')
     user_profile_id = request.POST.get('user_profile_id')
 
+    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
+
     channel = Channels.objects.get(pk=int(channel_id))
-    chat = Chats(message=message, channel_id=channel)
+    chat = Chats(message=message, channel_id=channel, user_profile_id=user_profile)
     chat.save()
 
-    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
     team = user_profile.team_id
     query = UserProfiles.objects.filter(team_id=team)
     for user in query:
-        device_send = GCMDevice.objects.get(user=user.user_link_obj)
-        device_send.send_message(message)
+        if user.id != int(user_profile_id):
+            device_send = GCMDevice.objects.get(user=user.user_link_obj)
+            device_send.send_message(message)
 
     return JsonResponse({'message': chat.message})
 
 
 @csrf_exempt
 def get_feeds(request):
-    a = Polls.objects.all()
-    b = Posts.objects.all()
+    user_profile_id = request.POST.get('user_profile_id')
+    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
+    pagenumber = request.GET.get('pagenumber', 1)
 
-    res = sorted(chain(a, b), key=attrgetter('date_created'))
-    return HttpResponse(res)
+    polls = Polls.objects.filter(team_id=user_profile.team_id)
+    posts = Posts.objects.filter(team_id=user_profile.team_id)
+
+    res = sorted(chain(polls, posts), key=attrgetter('date_created'))
+
+    query_paginated = Paginator(res, 20)
+    query = query_paginated.page(pagenumber)
+
+    next_page = None
+    if query.has_next():
+        next_page = query.next_page_number()
+
+    posts_array = []
+    for post in query:
+        if isinstance(post, Polls):
+            comment_count = Comments.objects.filter(poll_id=post).count()
+            upvotes_count = Upvotes.objects.filter(poll_id=post, is_active=True,
+                                                   is_upvote=True).count() - Upvotes.objects.filter(poll_id=post,
+                                                                                                    is_active=True,
+                                                                                                    is_upvote=False).count()
+            has_upvoted = Upvotes.objects.filter(poll_id=post, is_active=True, is_upvote=True,
+                                                 user_id=user_profile).count()
+            has_downvoted = Upvotes.objects.filter(poll_id=post, is_active=True, is_upvote=False,
+                                                   user_id=user_profile).count()
+
+            posts_array.append(
+                {'is_poll': True, 'heading': post.heading, 'description': post.description, 'image': post.image.url,
+                 'date': post.date_created, 'id': post.id, 'comment_count': comment_count,
+                 'upvotes_count': upvotes_count, 'has_downvoted': has_downvoted, 'has_upvoted': has_upvoted})
+        else:
+            comment_count = Comments.objects.filter(post_id=post).count()
+            upvotes_count = Upvotes.objects.filter(post_id=post, is_active=True,
+                                                   is_upvote=True).count() - Upvotes.objects.filter(post_id=post,
+                                                                                                    is_active=True,
+                                                                                                    is_upvote=False).count()
+            has_upvoted = Upvotes.objects.filter(post_id=post, is_active=True, is_upvote=True,
+                                                 user_id=user_profile).count()
+            has_downvoted = Upvotes.objects.filter(post_id=post, is_active=True, is_upvote=False,
+                                                   user_id=user_profile).count()
+            posts_array.append(
+                {'is_poll': False, 'heading': post.heading, 'description': post.description, 'image': post.image.url,
+                 'date': post.date_created, 'id': post.id, 'comment_count': comment_count,
+                 'upvotes_count': upvotes_count, 'has_downvoted': has_downvoted, 'has_upvoted': has_upvoted})
+
+    return JsonResponse({'posts_array': posts_array, 'next_page': next_page})

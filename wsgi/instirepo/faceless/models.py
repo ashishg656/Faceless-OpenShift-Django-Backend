@@ -48,15 +48,15 @@ class PollsChoices(models.Model):
 
 class Upvotes(models.Model):
     user_id = models.ForeignKey(UserProfiles)
-    post_id = models.ForeignKey(Posts)
-    poll_id = models.ForeignKey(Polls)
+    post_id = models.ForeignKey(Posts, null=True, blank=True)
+    poll_id = models.ForeignKey(Polls, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_upvote = models.BooleanField(default=True)
 
 
 class Comments(models.Model):
-    post_id = models.ForeignKey(Posts)
-    poll_id = models.ForeignKey(Polls)
+    post_id = models.ForeignKey(Posts, null=True, blank=True)
+    poll_id = models.ForeignKey(Polls, null=True, blank=True)
     comment = models.TextField()
     time = models.DateTimeField(auto_now=True)
 
@@ -77,3 +77,4 @@ class Chats(models.Model):
     message = models.TextField(null=True)
     time = models.DateTimeField(auto_now=True, null=True)
     channel_id = models.ForeignKey(Channels, null=True)
+    user_profile_id = models.ForeignKey(UserProfiles, null=True)
