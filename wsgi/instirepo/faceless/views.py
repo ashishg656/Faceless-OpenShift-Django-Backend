@@ -171,7 +171,7 @@ def all_channels(request):
             last_chat_msg = None
             last_chat_time = None
             try:
-                last_chat_obj = Chats.objects.filter(channel_id=channel).order_by('-time')[1]
+                last_chat_obj = Chats.objects.filter(channel_id=channel).order_by('-time')[0]
                 last_chat_msg = last_chat_obj.message
                 last_chat_time = last_chat_obj.time
             except:
