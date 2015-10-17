@@ -1,3 +1,4 @@
+import datetime
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpRequest, Http404, JsonResponse
@@ -220,6 +221,8 @@ def add_chat_message(request):
 
     user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
 
+    success = True
+
     channel = Channels.objects.get(pk=int(channel_id))
     chat = Chats(message=message, channel_id=channel, user_profile_id=user_profile)
     chat.save()
@@ -231,7 +234,28 @@ def add_chat_message(request):
             device_send = GCMDevice.objects.get(user=user.user_link_obj)
             device_send.send_message(message)
 
-    return JsonResponse({'message': chat.message})
+    return JsonResponse({'message': chat.message, 'success': success})
+
+
+@csrf_exempt
+def flag_chat_message(request):
+    user_profile_id = request.POST.get('user_profile_id')
+    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
+    chat_id = request.POST.get('chat_id')
+    chat_obj = Chats.objects.get(pk=int(chat_id))
+
+    try:
+        query = ChatFlags.objects.get(chat_obj=chat_obj, flagged_by=user_profile)
+    except:
+        chatflag = ChatFlags(chat_obj=chat_obj, flagged_by=user_profile)
+        chatflag.save()
+
+    query = ChatFlags.objects.filter(chat_obj=chat_obj).count()
+    if query > 5:
+        chat_obj.user_profile_id.is_flagged_from_chats = True
+        chat_obj.user_profile_id.time_till_flag = datetime.now() + datetime.timedelta(minutes=30)
+
+    return JsonResponse({'success': True})
 
 
 @csrf_exempt
@@ -266,9 +290,9 @@ def get_feeds(request):
                                                    user_id=user_profile).count()
             image_url = None
             try:
-            	image_url = post.image.url
+                image_url = post.image.url
             except:
-            	pass
+                pass
 
             posts_array.append(
                 {'is_poll': True, 'heading': post.heading, 'description': post.description, 'image': image_url,
@@ -287,9 +311,9 @@ def get_feeds(request):
 
             image_url = None
             try:
-            	image_url = post.image.url
+                image_url = post.image.url
             except:
-            	pass
+                pass
 
             posts_array.append(
                 {'is_poll': False, 'heading': post.heading, 'description': post.description, 'image': image_url,
