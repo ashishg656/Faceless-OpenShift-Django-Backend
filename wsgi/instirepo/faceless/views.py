@@ -252,7 +252,6 @@ def flag_chat_message(request):
 
     query = ChatFlags.objects.filter(chat_obj=chat_obj).count()
     if query > 5:
-        chat_obj.user_profile_id.is_flagged_from_chats = True
         chat_obj.user_profile_id.time_till_flag = datetime.now() + datetime.timedelta(minutes=30)
 
     return JsonResponse({'success': True})
