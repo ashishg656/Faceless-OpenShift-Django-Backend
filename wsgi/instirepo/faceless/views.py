@@ -229,8 +229,11 @@ def add_chat_message(request):
     query = UserProfiles.objects.filter(team_id=team)
     for user in query:
         if user.id != int(user_profile_id):
-            device_send = GCMDevice.objects.get(user=user.user_link_obj)
-            device_send.send_message(message)
+            try:
+                device_send = GCMDevice.objects.get(user=user.user_link_obj)
+                device_send.send_message(message)
+            except:
+                pass
 
     return JsonResponse({'message': chat.message})
 
