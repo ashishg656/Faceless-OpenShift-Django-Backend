@@ -11,7 +11,7 @@ class UserProfiles(models.Model):
     team_id = models.ForeignKey(Teams)
     is_admin = models.BooleanField(default=False)
     is_first_time_login = models.BooleanField(default=True)
-    
+    time_till_flag = models.DateTimeField(null=True, blank=True)
 
 
 class Channels(models.Model):
