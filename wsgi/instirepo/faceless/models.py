@@ -11,7 +11,6 @@ class UserProfiles(models.Model):
     team_id = models.ForeignKey(Teams)
     is_admin = models.BooleanField(default=False)
     is_first_time_login = models.BooleanField(default=True)
-    time_till_flag = models.DateTimeField(null=True, blank=True)
 
 
 class Channels(models.Model):
@@ -79,8 +78,3 @@ class Chats(models.Model):
     time = models.DateTimeField(auto_now=True, null=True)
     channel_id = models.ForeignKey(Channels, null=True)
     user_profile_id = models.ForeignKey(UserProfiles, null=True, blank=True)
-
-
-class ChatFlags(models.Model):
-    chat_obj = models.ForeignKey(Chats)
-    flagged_by = models.ForeignKey(UserProfiles)

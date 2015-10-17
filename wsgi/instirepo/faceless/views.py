@@ -221,8 +221,6 @@ def add_chat_message(request):
 
     user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
 
-    success = True
-
     channel = Channels.objects.get(pk=int(channel_id))
     chat = Chats(message=message, channel_id=channel, user_profile_id=user_profile)
     chat.save()
@@ -234,27 +232,27 @@ def add_chat_message(request):
             device_send = GCMDevice.objects.get(user=user.user_link_obj)
             device_send.send_message(message)
 
-    return JsonResponse({'message': chat.message, 'success': success})
+    return JsonResponse({'message': chat.message})
 
 
-@csrf_exempt
-def flag_chat_message(request):
-    user_profile_id = request.POST.get('user_profile_id')
-    user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
-    chat_id = request.POST.get('chat_id')
-    chat_obj = Chats.objects.get(pk=int(chat_id))
-
-    try:
-        query = ChatFlags.objects.get(chat_obj=chat_obj, flagged_by=user_profile)
-    except:
-        chatflag = ChatFlags(chat_obj=chat_obj, flagged_by=user_profile)
-        chatflag.save()
-
-    query = ChatFlags.objects.filter(chat_obj=chat_obj).count()
-    if query > 5:
-        chat_obj.user_profile_id.time_till_flag = datetime.now() + datetime.timedelta(minutes=30)
-
-    return JsonResponse({'success': True})
+# @csrf_exempt
+# def flag_chat_message(request):
+#     user_profile_id = request.POST.get('user_profile_id')
+#     user_profile = UserProfiles.objects.get(pk=int(user_profile_id))
+#     chat_id = request.POST.get('chat_id')
+#     chat_obj = Chats.objects.get(pk=int(chat_id))
+#
+#     try:
+#         query = ChatFlags.objects.get(chat_obj=chat_obj, flagged_by=user_profile)
+#     except:
+#         chatflag = ChatFlags(chat_obj=chat_obj, flagged_by=user_profile)
+#         chatflag.save()
+#
+#     query = ChatFlags.objects.filter(chat_obj=chat_obj).count()
+#     if query > 5:
+#         chat_obj.user_profile_id.time_till_flag = datetime.now() + datetime.timedelta(minutes=30)
+#
+#     return JsonResponse({'success': True})
 
 
 @csrf_exempt
